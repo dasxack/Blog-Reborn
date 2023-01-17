@@ -1,0 +1,27 @@
+.article-list {
+  list-style: none;
+  padding: 0;
+  background-color: #e5e5e5;
+  margin-top: 26px;
+}
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+  background-color: #e5e5e5;
+  margin-bottom: 20px;
+}
+.form-spinner {
+  position: relative !important;
+  top: 50%;
+  left: 50%;
+}
+.article-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 26px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px 4px rgba(4, 4, 5, 0.2);
+}
