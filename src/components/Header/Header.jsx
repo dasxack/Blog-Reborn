@@ -18,7 +18,9 @@ const Header = ({ connection }) => {
       console.log(err);
     }
   };
-
+  const getImageError = (e) => {
+    e.currentTarget.src = userAvatar;
+  };
   const buttonsUser = (
     <div className={classes['header__authorization']}>
       <Link to="/new-article">
@@ -27,7 +29,7 @@ const Header = ({ connection }) => {
       <Link to="/profile">
         <div className={classes.user}>
           <span>{userData ? userData.username : '[loading]'}</span>
-          <img src={userData?.image ? userData.image : userAvatar} alt="avatar" />
+          <img src={userData?.image ? userData.image : userAvatar} alt="avatar" onError={getImageError} />
         </div>
       </Link>
       <Link to="/">

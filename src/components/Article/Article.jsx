@@ -3,19 +3,26 @@ import React from 'react';
 import classes from './Article.module.scss';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { apiService } from '../../service/apiService';
+import userAvatar from '../../assets/1.jpg';
+import { reduction } from '../../utils/utils';
+import { sortingText } from '../../store/articleSlice';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 const Article = ({ item, confirmation, showSettings }) => {
+  const dispatch = useDispatch();
+  const { sortText } = useSelector((state) => state.articles);
   const { userData } = useSelector((state) => state.user);
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
   const { slug, title, tagList, author, description, createdAt, favorited, favoritesCount } = item;
   const { username, image } = author;
+
   const [like, setLike] = useState(favorited);
   const [likeCount, setLikeCount] = useState(favoritesCount);
   const [likeDisabled, setLikeDisabled] = useState(true);
+
   useEffect(() => {
     if (userData && token !== '') {
       setLikeDisabled(false);
@@ -41,6 +48,10 @@ const Article = ({ item, confirmation, showSettings }) => {
       });
     }
   };
+  const getImageError = (e) => {
+    e.currentTarget.src = userAvatar;
+  };
+  const defaultImg = 'https://static.productionready.io/images/smiley-cyrus.jpg';
   const articleButtons = (
     <div className={classes['article-controls']}>
       <button type="default" className={classes.red} onClick={confirmation}>
@@ -53,12 +64,17 @@ const Article = ({ item, confirmation, showSettings }) => {
       </Link>
     </div>
   );
+  const changeText = () => {
+    dispatch(sortingText(true));
+  };
   return (
     <>
       <div className={classes['post_left-block']}>
         <div className={classes['post_title-group']}>
           <h2 className={classes['post-left_name']}>
-            <Link to={`/articles/${slug}`}>{title}</Link>
+            <Link to={`/articles/${slug}`} onClick={changeText}>
+              {!sortText ? reduction(title) : title}
+            </Link>
           </h2>
           <div className={classes['post-left_like']}>
             <button className={classes['article-rating']} type="button" onClick={likeHandler} disabled={likeDisabled}>
@@ -88,11 +104,11 @@ const Article = ({ item, confirmation, showSettings }) => {
         </div>
         <div className={classes['post_tag']}>
           {tagList.map((el, index) => (
-            <button key={index}>{el}</button>
+            <button key={index}>{!sortText ? reduction(el) : el}</button>
           ))}
         </div>
         <div className={classes['post_text']}>
-          <p>{description}</p>
+          <p>{!sortText ? reduction(description) : description}</p>
         </div>
       </div>
       <div className={classes['post_right-block']}>
@@ -103,7 +119,7 @@ const Article = ({ item, confirmation, showSettings }) => {
               <span className={classes['post_author-date']}>{format(new Date(createdAt), 'MMMM d, yyyy')}</span>
             </div>
             <div className={classes['post_user-avatar']}>
-              <img src={image} alt="Avatar"></img>
+              <img src={image === defaultImg ? userAvatar : image} alt="avatar" onError={getImageError} />
             </div>
           </div>
           {userData && showSettings ? articleButtons : null}

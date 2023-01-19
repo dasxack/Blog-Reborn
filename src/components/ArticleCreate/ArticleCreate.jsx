@@ -32,31 +32,53 @@ const ArticleCreate = () => {
     };
     setLoading(true);
 
-    try {
-      apiService
-        .createArticle(newArticle, JSON.parse(localStorage.getItem('token')))
-        .then((res) => {
-          if (res.article) {
-            setSuccess(true);
-            setLoading(false);
-            successMessage();
-            setError(false);
-          }
+    // try {
+    //   apiService
+    //     .createArticle(newArticle, JSON.parse(localStorage.getItem('token')))
+    //     .then((res) => {
+    //       if (res.article) {
+    //         setSuccess(true);
+    //         setLoading(false);
+    //         successMessage();
+    //         setError(false);
+    //       }
 
-          if (res.errors) {
-            setLoading(false);
-            setError(true);
-            console.log(`${res.errors.error.status} ${res.errors.message}`);
-          }
-        })
-        .catch(() => {
+    //       if (res.errors) {
+    //         setLoading(false);
+    //         setError(true);
+    //         console.log(`${res.errors.error.status} ${res.errors.message}`);
+    //       }
+    //     })
+    //     .catch(() => {
+    //       setLoading(false);
+    //       setError(true);
+    //     });
+    // } catch (err) {
+    //   setLoading(false);
+    //   // console.log(err)
+    // }
+    // };
+
+    apiService
+      .createArticle(newArticle, JSON.parse(localStorage.getItem('token')))
+      .then((res) => {
+        if (res.article) {
+          setSuccess(true);
+          setLoading(false);
+          successMessage();
+          setError(false);
+        }
+
+        if (res.errors) {
           setLoading(false);
           setError(true);
-        });
-    } catch (err) {
-      setLoading(false);
-      // console.log(err)
-    }
+          console.log(`${res.errors.error.status} ${res.errors.message}`);
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        setError(true);
+      });
   };
 
   const onClose = () => {

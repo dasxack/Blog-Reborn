@@ -1,6 +1,7 @@
 .post_left-block {
   display: flex;
   flex-direction: column;
+  max-width: 700px;
 }
 .post-left_like {
   display: flex;
@@ -32,10 +33,12 @@
   margin: 0;
   color: #1890ff;
   margin-right: 13px;
+  overflow-wrap: anywhere;
 }
 .post-left_name a {
   text-decoration: none;
   color: #1890ff;
+  max-width: 700px;
 }
 .post-left_name a:hover {
   color: #0a4174;
@@ -66,6 +69,9 @@
   font-family: 'Open Sans';
   font-size: 18px;
   line-height: 28px;
+}
+.post_tag {
+  overflow-wrap: anywhere;
 }
 .post_tag button {
   margin-right: 4px;

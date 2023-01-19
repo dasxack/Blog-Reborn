@@ -5,11 +5,14 @@ import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Spin, Alert, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { userUpdate, errorNull } from '../../store/userSlice';
+import { errorNull } from '../../store/userSlice';
+import { userUpdate } from '../../service/apiService';
 const Profile = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { error, status, userData, errorMessage } = useSelector((state) => state.user);
+  const { error, status, userData, errorMessage } = useSelector((state) => {
+    return state.user;
+  });
 
   const [email, setEmail] = useState(userData.email);
   const [username, setUsername] = useState(userData.username);
@@ -46,8 +49,9 @@ const Profile = () => {
       },
     });
   };
-
+  const userPassword = localStorage.getItem('userPassword');
   const editProfile = (val) => {
+    localStorage.setItem('userPassword', val.password);
     const newUser = { ...userData };
     Object.keys(val).forEach((prop) => {
       newUser[prop] = val[prop];
@@ -116,6 +120,7 @@ const Profile = () => {
         <input
           type="new-password"
           placeholder="Password"
+          defaultValue={userPassword}
           className={errors?.password?.message || Object.keys(errorMessage).length ? classes.required : classes.input}
           {...register('password', {
             required: 'Enter your new password or use the old one.',

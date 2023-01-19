@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './ArticlesList.module.scss';
 import Article from '../Article/Article';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getArticles, paginationChange } from '../../store/articleSlice';
+import { paginationChange, sortingText } from '../../store/articleSlice';
+import { getArticles } from '../../service/apiService';
 import { Alert, Spin, Pagination } from 'antd';
 
 const ArticlesList = () => {
   const dispatch = useDispatch();
-  const { articles, currentPage, maxPages, status, error } = useSelector((state) => state.articles);
+  const { articles, currentPage, maxPages, status, error, sortText } = useSelector((state) => state.articles);
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
+  useEffect(() => {
+    dispatch(sortingText(false));
+  }, []);
   useEffect(() => {
     dispatch(getArticles([(currentPage - 1) * 5, token]));
   }, [currentPage, dispatch, token]);

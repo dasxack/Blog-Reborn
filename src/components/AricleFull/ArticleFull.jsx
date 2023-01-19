@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Alert, Modal, Spin, notification } from 'antd';
-import Article from '../Article';
-import { apiService } from '../../../service/apiService';
+import Article from '../Article/Article';
+import { apiService } from '../../service/apiService';
 import classes from './ArticleFull.module.scss';
 const ArticleFull = () => {
   const { userData } = useSelector((state) => state.user);
   const history = useHistory();
   const { slug } = useParams();
-
   const token = JSON.parse(localStorage.getItem('token')) ? JSON.parse(localStorage.getItem('token')) : '';
 
   const [item, setItem] = useState({});
@@ -19,6 +18,7 @@ const ArticleFull = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
   useEffect(() => {
     apiService
       .getArticleFull(slug, token)
@@ -55,7 +55,6 @@ const ArticleFull = () => {
             successMessage();
           } else {
             setError(true);
-            // console.log(`error: ${res.status}`)
           }
         });
       },

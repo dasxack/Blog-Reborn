@@ -111,7 +111,7 @@ const ArticleForm = ({ transferData, title, fields, loading }) => {
 };
 export default ArticleForm;
 ArticleForm.defaultProps = {
-  loading: '',
+  loading: false,
   title: '',
   description: '',
   fields: [],
@@ -119,10 +119,10 @@ ArticleForm.defaultProps = {
 };
 
 ArticleForm.propTypes = {
-  loading: PropTypes.string,
+  loading: PropTypes.bool,
   transferData: PropTypes.func.isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
-  fields: PropTypes.shape([]),
-  tagList: PropTypes.shape([]),
+  fields: PropTypes.array,
+  tagList: PropTypes.array,
 };

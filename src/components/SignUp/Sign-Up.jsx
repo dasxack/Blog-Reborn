@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Checkbox, Divider, Alert, Spin, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { errorNull, registration } from '../../store/userSlice';
+import { errorNull } from '../../store/userSlice';
+import { registration } from '../../service/apiService';
 const SignUp = () => {
   const dispatch = useDispatch();
   const history = useHistory();

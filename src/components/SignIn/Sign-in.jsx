@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Spin, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { userLogIn, errorNull } from '../../store/userSlice';
+import { errorNull } from '../../store/userSlice';
+import { userLogIn } from '../../service/apiService';
 const SignIn = () => {
   const dispatch = useDispatch();
   const history = useHistory();
